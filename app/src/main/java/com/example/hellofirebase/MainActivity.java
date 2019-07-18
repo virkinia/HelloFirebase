@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText;
     private DatabaseReference myRef;
     private TextView textView;
+
+    private static final String TAG = "MainActivity";
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -28,6 +35,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FirebaseApp.initializeApp(getApplicationContext());
+
+
+
+        //Inicializa los anuncios
+
+        MobileAds.initialize(this, getResources().getString(R.string.addmob_app_id));
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
         Button button = findViewById(R.id.enviar);
@@ -68,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("XXX", "Failed to read value.", error.toException());
             }
         });
+
+    }
+
+    private void initAdMod() {
 
     }
 
